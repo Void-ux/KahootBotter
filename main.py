@@ -1,10 +1,11 @@
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+
 from pathlib import Path
 
 import json
@@ -20,10 +21,16 @@ with open(path, 'r') as username_file:
 	username_list = username_file.read().split('\n')
 	username_file.close()
 
-firefox_option = Options()
-firefox_option.add_argument('--disable-extensions')
-s = Service(Path(__file__).resolve().parent / 'geckodriver.exe')
-driver = webdriver.Firefox(service=s, options=firefox_option)
+chrome_options = Options()
+chrome_options.add_argument('disable-infobars')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--ignore-certificate-error')
+chrome_options.add_argument('--ignore-ssl-errors')
+chrome_options.add_argument("log-level=3")
+chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
+s = Service(Path(__file__).resolve().parent / 'chromedriver.exe')
+driver = webdriver.Chrome(service=s)
 
 for i in range(config_dict['number_of_bots']):
 	driver.get(config_dict['url'])
