@@ -13,7 +13,7 @@ import time
 path = Path(__file__).resolve().parent / 'config.json'
 with open(path, 'r') as config_file:
 	config_dict = json.load(config_file)
-assert config_dict['number_of_bots'] > 0 and config_dict['number_of_bots'] < 1000
+assert 0 < config_dict['number_of_bots'] < 1000
 
 path = Path(__file__).resolve().parent / 'usernames.txt'
 with open(path, 'r') as username_file:
@@ -23,7 +23,7 @@ with open(path, 'r') as username_file:
 firefox_option = Options()
 firefox_option.add_argument('--disable-extensions')
 s = Service(Path(__file__).resolve().parent / 'geckodriver.exe')
-driver = webdriver.Firefox(service = s, options = firefox_option)
+driver = webdriver.Firefox(service=s, options=firefox_option)
 
 for i in range(config_dict['number_of_bots']):
 	driver.get(config_dict['url'])
