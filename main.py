@@ -34,7 +34,6 @@ chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 s = Path(__file__).resolve().parent / 'chromedriver.exe'
 driver = webdriver.Chrome(executable_path=str(s), options=chrome_options)
 
-print("Length of bots: {}".format(len(range(config_dict['number_of_bots']))))
 for i in range(config_dict['number_of_bots']):
 	driver.get(config_dict['url'])
 	try:
@@ -49,8 +48,6 @@ for i in range(config_dict['number_of_bots']):
 	time.sleep(0.1)
 
 	# No need to create a new tab if amt is just one
-	print("i: {}".format(i))
-	print("I less than length: {}".format(i < len(range(config_dict['number_of_bots']))))
 	if i < (len(range(config_dict['number_of_bots'])) - 1):
 		driver.execute_script('''window.open("https://www.google.com", "_blank");''')
 		driver.switch_to.window(driver.window_handles[i + 1])
