@@ -30,7 +30,7 @@ This is a Kahoot botter that uses Selenium to create an autonomous chromium web 
 **Prerequisites:**
 - Python 3.10.*
 - [Chrome](https://www.google.com/chrome/)
-- [ChromeDriver](https://chromedriver.chromium.org/downloads)
+- [ChromeDriver](https://chromedriver.chromium.org/downloads) (Same version as your Chrome)
 - 4gb RAM
 ---
 Programmed by [Void](https://github.com/Void-ux) and [Thrill](https://github.com/Kalaborative)
