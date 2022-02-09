@@ -1,5 +1,5 @@
 from selenium import webdriver
-# from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -7,12 +7,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pathlib import Path
+from random import choice
 
 import json
 import time
-
-
-from random import choice
 
 path = Path(__file__).resolve().parent / 'config.json'
 with open(path, 'r') as config_file:
@@ -35,8 +33,8 @@ chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 # Can opt to remove this if you want, but I find it easier not to have the GUI
 chrome_options.add_argument('-headless')
 
-s = Path(__file__).resolve().parent / 'chromedriver.exe'
-driver = webdriver.Chrome(executable_path=str(s), options=chrome_options)
+s = Service(Path(__file__).resolve().parent / 'chromedriver.exe')
+driver = webdriver.Chrome(service=s, options=chrome_options)
 
 print("Spawning bots...")
 
