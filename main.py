@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from pathlib import Path
+from random import choice
 
 import json
 import time
@@ -27,10 +28,11 @@ chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--ignore-certificate-error')
 chrome_options.add_argument('--ignore-ssl-errors')
 chrome_options.add_argument("log-level=3")
+chrome_options.add_experimental_option("detach", True)
 chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
 s = Service(Path(__file__).resolve().parent / 'chromedriver.exe')
-driver = webdriver.Chrome(service=s)
+driver = webdriver.Chrome(service=s, options=chrome_options)
 
 for i in range(config_dict['number_of_bots']):
 	driver.get(config_dict['url'])
@@ -41,8 +43,9 @@ for i in range(config_dict['number_of_bots']):
 	except:
 		driver.quit()
 
-	nck_inp_element.send_keys(username_list[i] + Keys.ENTER)
+	nck_inp_element.send_keys(choice(username_list) + Keys.ENTER)
 	time.sleep(0.1)
 
-	driver.execute_script('''window.open("https://www.google.com", "_blank");''')
-	driver.switch_to.window(driver.window_handles[i + 1])
+	if i < (len(range(config_dict['number_of_bots'])) - 1):
+		driver.execute_script('''window.open("https://www.google.com", "_blank");''')
+		driver.switch_to.window(driver.window_handles[i + 1])
